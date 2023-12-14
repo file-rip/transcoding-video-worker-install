@@ -15,6 +15,33 @@ mkdir -p $LOCAL_TMP
 mkdir -p $SRC_DIR
 cd $SRC_DIR
 
+# Install system utilities and updates
+install_utils() {
+    if [ -n "$(command -v dnf)" ]; then
+        package_manager="dnf"
+    elif [ -n "$(command -v apt)" ]; then
+        package_manager="apt"
+    else
+        echo "Neither DNF nor APT package manager found. Exiting."
+        exit 1
+    fi
+
+    echo "Updating packages..."
+    $package_manager -y update
+
+    echo "Installing packages..."
+    if [ "$package_manager" = "dnf" ]; then
+        $package_manager -y groupinstall "Development Tools"
+        $package_manager install -y git autoconf openssl-devel cmake3 htop iotop yasm nasm jq freetype-devel fribidi-devel harfbuzz-devel fontconfig-devel bzip2-devel
+    elif [ "$package_manager" = "apt" ]; then
+        export DEBIAN_FRONTEND=noninteractive;
+        export NEEDRESTART_MODE=a;
+        $package_manager install -y build-essential git autoconf libtool libssl-dev cmake htop iotop yasm nasm jq libfreetype6-dev libfribidi-dev libharfbuzz-dev libfontconfig1-dev libbz2-dev
+    fi
+
+    echo "Success: Updates and packages installed."
+}
+
 # Helper functionS to check installation status
 check_installation() {
     if [ -f "$1" ]; then
@@ -75,6 +102,7 @@ install_ffmpeg() {
 }
 
 # Execute Functions
+install_utils
 install_ffmpeg_prereqs
 install_ffmpeg
 rm -fr $SRC_DIR
