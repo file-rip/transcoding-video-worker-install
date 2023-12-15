@@ -18,6 +18,8 @@ apt-get install -y wget git make
 # Install devscripts for the dch command
 apt-get install -y devscripts
 
+apt-get build-dep ffmpeg
+
 NON_FREE_REPO="deb-src mirror://mirrors.ubuntu.com/mirrors.txt jammy main restricted universe multiverse"
 if ! grep -q "^$NON_FREE_REPO$" /etc/apt/sources.list; then
     echo "$NON_FREE_REPO" | tee -a /etc/apt/sources.list
