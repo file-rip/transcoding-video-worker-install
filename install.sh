@@ -13,11 +13,11 @@ suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
 # Install libavcodec-extra manually so the build-deps step doesn't pull the problematic libavcodec59
 # libjs-bootstrap is a dependency of ffmpeg-doc
 # devscripts contains the dch command
-apt-get install libavcodec-extra libjs-bootstrap devscripts
+apt-get -y install libavcodec-extra libjs-bootstrap devscripts
 apt-mark auto libavcodec-extra libjs-bootstrap devscripts
 
 apt-get build-dep ffmpeg -t $suite
-apt-get install nvidia-cuda-toolkit -t $suite
+apt-get -y install nvidia-cuda-toolkit -t $suite
 mkdir -p ffmpeg-deb/src
 cd ffmpeg-deb
 if [[ -d nv-codec-headers ]]
