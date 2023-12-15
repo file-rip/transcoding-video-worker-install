@@ -54,7 +54,7 @@ export LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib:$LIBRARY_PATH
 
 # Modify ffmpeg package for NVIDIA hardware acceleration
 cd ffmpeg-*
-sed -i 's|--enable-sdl2|--enable-sdl2 --enable-cuda --enable-cuvid --enable-nvdec --enable-nvenc --enable-libnpp --enable-nonfree|' debian/rules
+sed -i 's|--enable-sdl2|--enable-sdl2 --enable-cuda --enable-cuvid --enable-nvdec --enable-nvenc --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --enable-libnpp --enable-nonfree|' debian/rules
 DEBEMAIL="root@local" DEBFULLNAME="script" dch --local "+nvidiasupport" "Compiled with support for NVIDIA hardware acceleration"
 DEB_BUILD_OPTIONS="nocheck notest" dpkg-buildpackage -r -nc --jobs=auto --no-sign
 cd ..
