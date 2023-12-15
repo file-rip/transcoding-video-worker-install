@@ -8,7 +8,7 @@
 # Abort on error
 set -e
 
-suite=$(source /etc/os-release && echo $VERSION_CODENAME)*
+suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
 
 # Update package list
 apt-get update
