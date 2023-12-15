@@ -10,7 +10,12 @@ set -e
 
 suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
 
-echo "deb-src http://deb.debian.org/debian/ bookworm main contrib non-free" | tee -a /etc/apt/sources.list
+apt update
+
+NON_FREE_REPO="deb http://deb.debian.org/debian/ bookworm main contrib non-free"
+if ! grep -q "^$NON_FREE_REPO$" /etc/apt/sources.list; then
+    echo "$NON_FREE_REPO" | sudo tee -a /etc/apt/sources.list
+fi
 
 apt update
 
