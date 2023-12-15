@@ -51,12 +51,13 @@ apt-get source ffmpeg -t $suite
 
 # Modify ffmpeg package for NVIDIA hardware acceleration
 cd ffmpeg-*
-sed -i 's|--enable-sdl2|--enable-sdl2 --enable-cuda --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --enable-cuvid --enable-nvdec --enable-nvenc --enable-libnpp --enable-nonfree|' debian/rules
-DEBEMAIL="root@local" DEBFULLNAME="script" dch --local "+nvidiasupport" "Compiled with support for NVIDIA hardware acceleration"
-DEB_BUILD_OPTIONS="nocheck notest" dpkg-buildpackage -r -nc --jobs=auto --no-sign
-cd ..
+ls -la 
+#sed -i 's|--enable-sdl2|--enable-sdl2 --enable-cuda --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --enable-cuvid --enable-nvdec --enable-nvenc --enable-libnpp --enable-nonfree|' debian/rules
+#DEBEMAIL="root@local" DEBFULLNAME="script" dch --local "+nvidiasupport" "Compiled with support for NVIDIA hardware acceleration"
+#DEB_BUILD_OPTIONS="nocheck notest" dpkg-buildpackage -r -nc --jobs=auto --no-sign
+#cd ..
 
 # Install all built packages, except the non-extra variants of libavfilter, libavcodec and libavformat
-dpkg -i $(ls *.deb | grep -Ev "(libavfilter|libavcodec|libavformat)[0-9]+_")
-echo "Verification:"
-ffmpeg -codecs 2> /dev/null | grep nvenc
+#dpkg -i $(ls *.deb | grep -Ev "(libavfilter|libavcodec|libavformat)[0-9]+_")
+#echo "Verification:"
+#ffmpeg -codecs 2> /dev/null | grep nvenc
