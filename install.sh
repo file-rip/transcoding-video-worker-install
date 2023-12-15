@@ -24,9 +24,9 @@ if ! grep -q "^$NON_FREE_REPO$" /etc/apt/sources.list; then
     echo "$NON_FREE_REPO" | tee -a /etc/apt/sources.list
 fi
 
-apt-get build-dep ffmpeg
-
 apt-get update
+
+apt-get build-dep ffmpeg
 
 # Clone and install nv-codec-headers
 mkdir -p ffmpeg-deb/src
