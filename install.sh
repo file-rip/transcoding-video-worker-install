@@ -8,7 +8,7 @@
 # Abort on error
 set -e
 
-suite=$(source /etc/os-release && echo $VERSION_CODENAME)*
+suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
 
 # Install libavcodec-extra manually so the build-deps step doesn't pull the problematic libavcodec59
 # libjs-bootstrap is a dependency of ffmpeg-doc
