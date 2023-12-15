@@ -26,7 +26,7 @@ fi
 
 apt-get update
 
-apt-get build-dep ffmpeg
+apt-get -y build-dep ffmpeg
 
 # Clone and install nv-codec-headers
 mkdir -p ffmpeg-deb/src
