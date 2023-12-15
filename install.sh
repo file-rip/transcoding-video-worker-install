@@ -8,6 +8,8 @@
 # Abort on error
 set -e
 
+suite=$(source /etc/os-release && echo $VERSION_CODENAME)*
+
 # Update package list
 apt-get update
 
@@ -26,7 +28,7 @@ fi
 
 apt-get update
 
-apt-get -y build-dep ffmpeg
+apt-get -y build-dep ffmpeg -t $suite
 
 # Clone and install nv-codec-headers
 mkdir -p ffmpeg-deb/src
@@ -45,7 +47,7 @@ make
 make install
 cd ../src
 rm -rf ./*
-apt-get source ffmpeg
+apt-get source ffmpeg -t $suite
 
 # Modify ffmpeg package for NVIDIA hardware acceleration
 cd ffmpeg-*
