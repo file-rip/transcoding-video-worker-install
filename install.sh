@@ -33,7 +33,7 @@ echo "deb-src http://deb.debian.org/debian/ bookworm main contrib non-free" | te
  apt-get build-dep -y ffmpeg -t $suite
 
 # Install NVIDIA CUDA Toolkit
-apt-get install -y nvidia-cuda-toolkit -t $suite
+apt-get -o Dpkg::Options::="--force-overwrite" install -y nvidia-cuda-toolkit -t $suite
 
 # Clone and install nv-codec-headers
 mkdir -p ffmpeg-deb/src
