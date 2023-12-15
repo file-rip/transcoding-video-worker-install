@@ -49,6 +49,9 @@ cd ../src
 rm -rf ./*
 apt-get source ffmpeg -t $suite
 
+export LD_LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib:$LIBRARY_PATH
+
 # Modify ffmpeg package for NVIDIA hardware acceleration
 cd ffmpeg-*
 sed -i 's|--enable-sdl2|--enable-sdl2 --enable-cuda --enable-cuvid --enable-nvdec --enable-nvenc --enable-libnpp --enable-nonfree|' debian/rules
