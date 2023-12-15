@@ -20,7 +20,7 @@ apt-get install -y devscripts
 
 NON_FREE_REPO="deb-src mirror://mirrors.ubuntu.com/mirrors.txt jammy main restricted universe multiverse"
 if ! grep -q "^$NON_FREE_REPO$" /etc/apt/sources.list; then
-    echo "$NON_FREE_REPO" | sudo tee -a /etc/apt/sources.list
+    echo "$NON_FREE_REPO" | tee -a /etc/apt/sources.list
 fi
 
 apt-get update
