@@ -14,7 +14,13 @@ apt update
 
 NON_FREE_REPO="deb http://deb.debian.org/debian/ bookworm main contrib non-free"
 if ! grep -q "^$NON_FREE_REPO$" /etc/apt/sources.list; then
-    echo "$NON_FREE_REPO" | sudo tee -a /etc/apt/sources.list
+    echo "$NON_FREE_REPO" | tee -a /etc/apt/sources.list
+fi
+
+
+NON_FREE_REPO_SRC="deb-src http://deb.debian.org/debian/ bookworm main contrib non-free"
+if ! grep -q "^$NON_FREE_REPO_SRC$" /etc/apt/sources.list; then
+    echo "$NON_FREE_REPO_SRC" | tee -a /etc/apt/sources.list
 fi
 
 apt update
