@@ -21,7 +21,7 @@ apt-get install -y libavcodec-extra libjs-bootstrap devscripts
 apt-mark auto libavcodec-extra libjs-bootstrap devscripts
 
 apt-get build-dep ffmpeg -t $suite
-apt-get install --no-install-recommends nvidia-cuda-toolkit -t $suite
+apt-get install -y --no-install-recommends nvidia-cuda-toolkit -t $suite
 
 
 mkdir -p ffmpeg-deb/src
