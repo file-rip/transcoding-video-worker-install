@@ -13,6 +13,7 @@ suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
 # Install libavcodec-extra manually so the build-deps step doesn't pull the problematic libavcodec59
 # libjs-bootstrap is a dependency of ffmpeg-doc
 # devscripts contains the dch command
+apt-get update
 apt-get -y install libavcodec-extra libjs-bootstrap devscripts
 apt-mark auto libavcodec-extra libjs-bootstrap devscripts
 
