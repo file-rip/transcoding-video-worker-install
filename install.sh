@@ -14,21 +14,7 @@ suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
 apt-get update
 
 # Install necessary tools and dependencies
-apt-get install -y wget git make
-
-# Ubuntu 22.04 should already have the necessary codecs and libraries in its standard repositories
-# Install devscripts for the dch command
-apt-get install -y devscripts
-
-
-NON_FREE_REPO="deb-src mirror://mirrors.ubuntu.com/mirrors.txt jammy main restricted universe multiverse"
-if ! grep -q "^$NON_FREE_REPO$" /etc/apt/sources.list; then
-    echo "$NON_FREE_REPO" | tee -a /etc/apt/sources.list
-fi
-
-apt-get update
-
-apt-get -y build-dep ffmpeg -t $suite
+apt-get install -y wget git build-essential yasm cmake libtool libc6 libc6-dev unzip wget libnuma1 libnuma-dev
 
 # Clone and install nv-codec-headers
 mkdir -p ffmpeg-deb/src
@@ -47,19 +33,18 @@ make
 make install
 cd ../src
 rm -rf ./*
-apt-get source ffmpeg -t $suite
 
-export LD_LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib:$LD_LIBRARY_PATH
-export LIBRARY_PATH=/usr/local/cuda/targets/x86_64-linux/lib:$LIBRARY_PATH
+#install ffmpeg
 
-# Modify ffmpeg package for NVIDIA hardware acceleration
-cd ffmpeg-*
-sed -i 's|--enable-sdl2|--enable-sdl2 --enable-cuda --enable-cuvid --enable-nvdec --enable-nvenc --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --enable-libnpp --enable-nonfree|' debian/rules
-DEBEMAIL="root@local" DEBFULLNAME="script" dch --local "+nvidiasupport" "Compiled with support for NVIDIA hardware acceleration"
-DEB_BUILD_OPTIONS="nocheck notest" dpkg-buildpackage -r -nc --jobs=auto --no-sign
+git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg/
+cd ffmpeg
+
+# Checkout the latest release
+git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+
+./configure  --enable-cuda-nvcc --enable-cuda --enable-cuvid --enable-nvdec --enable-nvenc --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --enable-libnpp --enable-nonfree  --extra-cflags=-I/usr/local/cuda/include --extra-ldflags=-L/usr/local/cuda/lib64 --disable-static --enable-shared
+
 cd ..
 
-# Install all built packages, except the non-extra variants of libavfilter, libavcodec and libavformat
-dpkg -i $(ls *.deb | grep -Ev "(libavfilter|libavcodec|libavformat)[0-9]+_")
 echo "Verification:"
 ffmpeg -codecs 2> /dev/null | grep nvenc
