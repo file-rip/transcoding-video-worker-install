@@ -29,8 +29,8 @@ fi
 
 # Checkout the latest release
 git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
-make PREFIX=/usr/local
-make install PREFIX=/usr/local
+make PREFIX=/usr/local/cuda
+make install PREFIX=/usr/local/cuda
 cd ../src
 rm -rf ./*
 
