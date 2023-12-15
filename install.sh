@@ -29,8 +29,8 @@ fi
 
 # Checkout the latest release
 git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
-make PREFIX=/usr
-make install PREFIX=/usr
+make PREFIX=/usr/local
+make install PREFIX=/usr/local
 cd ../src
 rm -rf ./*
 
