@@ -23,8 +23,8 @@ suite=$(. /etc/os-release && echo $VERSION_CODENAME)*
  apt-mark auto libavcodec-extra libjs-bootstrap devscripts
 
 # Add non-free repositories if not already present
-echo "deb http://deb.debian.org/debian/ $suite main contrib non-free" |  tee -a /etc/apt/sources.list
-echo "deb-src http://deb.debian.org/debian/ $suite main contrib non-free" |  tee -a /etc/apt/sources.list
+echo "deb http://deb.debian.org/debian/ bookworm main contrib non-free" | tee -a /etc/apt/sources.list
+echo "deb-src http://deb.debian.org/debian/ bookworm main contrib non-free" | tee -a /etc/apt/sources.list
 
 # Update package list after adding non-free repositories
  apt-get update
