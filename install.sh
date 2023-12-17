@@ -17,7 +17,3 @@ make -j$(nproc)
 make install
 
 rm -rf ffmpeg
-
-echo "Verification:"
-#ffmpeg -codecs 2> /dev/null | grep nvenc
-ffmpeg -hwaccels
