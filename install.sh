@@ -2,12 +2,6 @@
 # Abort on error
 set -e
 
-apt update
-
-apt-get install -y build-essential yasm nasm cmake git pkg-config
-
-apt-get install -y libx264-dev libx265-dev libnuma-dev
-
 git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 cd nv-codec-headers
 make
