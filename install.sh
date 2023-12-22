@@ -53,5 +53,5 @@ make clean
 make -j
 make install
 
-
-rm -rf ffmpeg
+cd ..
+rm -rf FFmpeg-n${FFMPEG_VERSION}
