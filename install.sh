@@ -2,8 +2,8 @@
 # Abort on error
 set -e
 
-NV_CODEC_HEADERS_VERSION=12.1.14.0
-FFMPEG_VERSION=6.0.1
+NV_CODEC_HEADERS_VERSION=11.0.10.1
+FFMPEG_VERSION=4.4.2
 
 git clone https://git.videolan.org/git/ffmpeg/nv-codec-headers.git
 cd nv-codec-headers
